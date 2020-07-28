@@ -2,7 +2,7 @@
   "name": "tt-scores",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://mzbrandl.github.io/tt-scores",
+  "homepage": "http://www.ttscores.tk",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@testing-library/jest-dom": "^4.2.4",
