@@ -10,7 +10,10 @@ import {
   TableCell,
   TableBody,
   makeStyles,
+  TableFooter,
+  TablePagination,
 } from "@material-ui/core";
+import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
 
 export interface IGamesListProps {
   games: IGame[];
@@ -25,8 +28,24 @@ const useStyles = makeStyles({
 
 export function GamesList(props: IGamesListProps) {
   const { games } = props;
-  const classes = useStyles();
   const sortedGames = games.sort((a, b) => b.date - a.date);
+
+  const classes = useStyles();
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const emptyRows =
+    rowsPerPage -
+    Math.min(rowsPerPage, sortedGames.length - page * rowsPerPage);
+
+  const handleChangePage = (_event: any, newPage: any) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: any) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   return (
     <>
@@ -46,7 +65,13 @@ export function GamesList(props: IGamesListProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {sortedGames.map((game) => (
+          {(rowsPerPage > 0
+            ? sortedGames.slice(
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage
+              )
+            : sortedGames
+          ).map((game) => (
             <TableRow key={game.date}>
               <TableCell component="th" scope="row">
                 {new Date(game.date).toLocaleString()}
@@ -56,6 +81,24 @@ export function GamesList(props: IGamesListProps) {
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+              colSpan={3}
+              count={sortedGames.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: { "aria-label": "rows per page" },
+                native: true,
+              }}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     </>
   );

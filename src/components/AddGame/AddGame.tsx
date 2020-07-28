@@ -3,10 +3,9 @@ import { Select, makeStyles, FormControl, Button } from "@material-ui/core";
 
 import firebase from "../../firebase";
 import { IGame } from "../../models/IGame";
+import playerList from "../../playerlist.json";
 
 import styles from "./AddGame.module.scss";
-
-const playerOptions = ["Cheezy", "Consti", "Marcel", "Moritz", "Simon"];
 
 export function AddGame() {
   const [winner, setWinner] = React.useState("");
@@ -54,7 +53,7 @@ export function AddGame() {
             onChange={(e) => setWinner(e.target.value as string)}
           >
             <option value={""}>Select player</option>
-            {playerOptions
+            {playerList
               .filter((player) => (looser ? player !== looser : true))
               .map((player, key) => (
                 <option key={key} value={player}>
@@ -71,7 +70,7 @@ export function AddGame() {
             onChange={(e) => setLooser(e.target.value as string)}
           >
             <option value={""}>Select player</option>
-            {playerOptions
+            {playerList
               .filter((player) => (winner ? player !== winner : true))
               .map((player, key) => (
                 <option key={key} value={player}>
