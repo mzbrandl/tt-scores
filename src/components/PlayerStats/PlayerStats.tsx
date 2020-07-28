@@ -95,15 +95,21 @@ export function PlayerStats(props: IPlayerStatsProps) {
   const classes = useStyles();
 
   return (
-    <div className={styles.playerStats}>
-      <div className={styles.row}>
-        <div className={styles.drop}>
-          <h3>Stats:</h3>
+    <>
+      <h3>Player stats</h3>
+      <div className={styles.playerStats}>
+        <div className={styles.row}>
           <FormControl variant="outlined" className={classes.formControl}>
             <Select
               native
               value={player}
-              onChange={(e) => setPlayer(e.target.value as string)}
+              onChange={(e) => {
+                setPlayer(e.target.value as string);
+                setTimeout(
+                  () => window.scrollTo(0, document.body.scrollHeight),
+                  100
+                );
+              }}
             >
               <option value={""}>Select player</option>
               {playerList.map((player, key) => (
@@ -113,23 +119,23 @@ export function PlayerStats(props: IPlayerStatsProps) {
               ))}
             </Select>
           </FormControl>
+          {player && (
+            <div className={styles.statGrid}>
+              <div>Wins: {stats.wins}</div>
+              <div>Total: {stats.total}</div>
+              <div>Losses: {stats.losses}</div>
+              <div>Quota: {stats.quota.toFixed(2)}</div>
+            </div>
+          )}
         </div>
         {player && (
-          <div className={styles.statGrid}>
-            <div>Wins: {stats.wins}</div>
-            <div>Total: {stats.total}</div>
-            <div>Losses: {stats.losses}</div>
-            <div>Quota: {stats.quota.toFixed(2)}</div>
-          </div>
+          <HorizontalBar
+            data={data}
+            width={600}
+            options={{ maintainAspectRatio: false }}
+          />
         )}
       </div>
-      {player && (
-        <HorizontalBar
-          data={data}
-          width={600}
-          options={{ maintainAspectRatio: false }}
-        />
-      )}
-    </div>
+    </>
   );
 }

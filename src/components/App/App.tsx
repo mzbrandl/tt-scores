@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import firebase from "../../firebase";
 import { IGame } from "../../models/IGame";
 
-import "./App.css";
+import styles from "./App.module.scss";
 import { AddGame } from "../AddGame/AddGame";
 import { GamesList } from "../GamesList/GamesList";
 import { PlayerStats } from "../PlayerStats/PlayerStats";
@@ -32,7 +32,7 @@ function useGames(): IGame[] {
 function App() {
   const games = useGames();
   return (
-    <div className="App">
+    <div className={styles.App}>
       <h1>TT-Scores</h1>
       <AddGame />
       <GamesList games={games} />

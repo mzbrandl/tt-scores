@@ -49,7 +49,7 @@ export function GamesList(props: IGamesListProps) {
 
   return (
     <>
-      <h3>latest games</h3>
+      <h3>Latest games</h3>
       <Table className={classes.table} size="small" aria-label="simple table">
         <TableHead>
           <TableRow>
