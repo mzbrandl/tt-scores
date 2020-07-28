@@ -4,6 +4,8 @@ import firebase from '../../firebase';
 import { IGame } from '../../models/IGame';
 
 import './App.css';
+import { AddGame } from '../AddGame/AddGame';
+import { GamesList } from '../GamesList/GamesList';
 
 function useGames(): IGame[] {
   const [games, setGames] = useState<IGame[]>([]);
@@ -24,21 +26,15 @@ function useGames(): IGame[] {
   return games;
 }
 
-function addGame(game: IGame) {
-  firebase
-    .firestore()
-    .collection('games').add(game);
-}
 
-const example: IGame = { winner: ' Moe', looser: 'Simon', date: new Date() };
 
 function App() {
   const games = useGames();
-  console.log(games);
   return (
     <div className="App">
       <h1>TT-Scores</h1>
-      <button onClick={() => addGame(example)}>add game</button>
+      <AddGame />
+      <GamesList games={games} />
     </div>
   );
 }

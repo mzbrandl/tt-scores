@@ -1,0 +1,19 @@
+.addGame {
+  display: grid;
+  grid-template-columns: 1fr .1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  max-width: 600px;
+  margin: auto;
+  grid-gap: .2em;
+  margin-bottom: 2em;
+
+  h2 {
+    margin: 0;
+  }
+
+  .submit {
+    grid-column: 1 / 4;
+    margin-top: 1em;
+  }
+}
