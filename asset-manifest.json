@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/tt-scores/static/css/main.03d386b4.chunk.css",
+    "main.js": "/tt-scores/static/js/main.b0caab1b.chunk.js",
+    "main.js.map": "/tt-scores/static/js/main.b0caab1b.chunk.js.map",
+    "runtime-main.js": "/tt-scores/static/js/runtime-main.9306de48.js",
+    "runtime-main.js.map": "/tt-scores/static/js/runtime-main.9306de48.js.map",
+    "static/js/2.390410ca.chunk.js": "/tt-scores/static/js/2.390410ca.chunk.js",
+    "static/js/2.390410ca.chunk.js.map": "/tt-scores/static/js/2.390410ca.chunk.js.map",
+    "index.html": "/tt-scores/index.html",
+    "precache-manifest.db79380b9b43fae22cf1fda11e163f38.js": "/tt-scores/precache-manifest.db79380b9b43fae22cf1fda11e163f38.js",
+    "service-worker.js": "/tt-scores/service-worker.js",
+    "static/css/main.03d386b4.chunk.css.map": "/tt-scores/static/css/main.03d386b4.chunk.css.map",
+    "static/js/2.390410ca.chunk.js.LICENSE.txt": "/tt-scores/static/js/2.390410ca.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9306de48.js",
+    "static/js/2.390410ca.chunk.js",
+    "static/css/main.03d386b4.chunk.css",
+    "static/js/main.b0caab1b.chunk.js"
+  ]
+}
