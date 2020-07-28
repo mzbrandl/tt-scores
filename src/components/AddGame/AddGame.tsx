@@ -6,6 +6,14 @@ import { IGame } from '../../models/IGame';
 
 import styles from './AddGame.module.scss';
 
+const playerOptions = [
+  'Cheezy',
+  'Consti',
+  'Marcel',
+  'Moritz',
+  'Simon'
+]
+
 export function AddGame() {
   const [winner, setWinner] = React.useState('');
   const [looser, setLooser] = React.useState('');
@@ -51,11 +59,9 @@ export function AddGame() {
         onChange={(e) => setWinner(e.target.value as string)}
       >
         <option value={undefined}>Select player</option>
-        <option value="Moritz">Moritz</option>
-        <option value="Simon">Simon</option>
-        <option value="Consti">Consti</option>
-        <option value="Cheezy">Cheezy</option>
-        <option value="Marcel">Marcel</option>
+        {playerOptions
+          .filter(player => looser ? player !== looser : true)
+          .map((player, key) => <option key={key} value={player}>{player}</option>)}
       </Select>
     </FormControl>
     <h2>VS</h2>
@@ -66,11 +72,9 @@ export function AddGame() {
         onChange={(e) => setLooser(e.target.value as string)}
       >
         <option value={undefined}>Select player</option>
-        <option value="Moritz">Moritz</option>
-        <option value="Simon">Simon</option>
-        <option value="Consti">Consti</option>
-        <option value="Cheezy">Cheezy</option>
-        <option value="Marcel">Marcel</option>
+        {playerOptions
+          .filter(player => winner ? player !== winner : true)
+          .map((player, key) => <option key={key} value={player}>{player}</option>)}
       </Select>
     </FormControl>
 
