@@ -4,16 +4,16 @@ import { HorizontalBar } from "react-chartjs-2";
 
 import { IGame } from "../../models/IGame";
 import { FormControl, Select, makeStyles } from "@material-ui/core";
-import playerList from "../../playerlist.json";
 
 import styles from "./PlayerStats.module.scss";
 
 export interface IPlayerStatsProps {
   games: IGame[];
+  players: string[];
 }
 
-function getChartData(games: IGame[], player: string) {
-  const opponentWins = playerList
+function getChartData(games: IGame[], player: string, players: string[]) {
+  const opponentWins = players
     .filter((opponent) => opponent !== player)
     .map((opponent) =>
       games.reduce((acc, current) => {
@@ -23,7 +23,7 @@ function getChartData(games: IGame[], player: string) {
         return acc;
       }, 0)
     );
-  const opponentLosses = playerList
+  const opponentLosses = players
     .filter((opponent) => opponent !== player)
     .map((opponent) =>
       games.reduce((acc, current) => {
@@ -35,17 +35,17 @@ function getChartData(games: IGame[], player: string) {
     );
 
   return {
-    labels: playerList.filter((opponent) => opponent !== player),
+    labels: players.filter((opponent) => opponent !== player),
     datasets: [
       {
         label: "Wins",
-        backgroundColor: "rgb(78, 207, 113)",
+        backgroundColor: "rgb(78, 207, 192)",
         barThickness: "flex",
         data: opponentWins,
       },
       {
         label: "Losses",
-        backgroundColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgb(207, 168, 78)",
         barThickness: "flex",
         data: opponentLosses,
       },
@@ -72,11 +72,10 @@ function getPlayerStats(games: IGame[], player: string) {
   return { wins, losses, total, quota };
 }
 
-export function PlayerStats(props: IPlayerStatsProps) {
-  const { games } = props;
+export function PlayerStats({ games, players }: IPlayerStatsProps) {
   const [player, setPlayer] = useState("");
 
-  const data = getChartData(games, player);
+  const data = getChartData(games, player, players);
   const stats = getPlayerStats(games, player);
 
   const useStyles = makeStyles((theme) => ({
@@ -112,7 +111,7 @@ export function PlayerStats(props: IPlayerStatsProps) {
               }}
             >
               <option value={""}>Select player</option>
-              {playerList.map((player, key) => (
+              {players.map((player, key) => (
                 <option key={key} value={player}>
                   {player}
                 </option>

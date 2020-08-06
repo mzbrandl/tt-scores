@@ -1,6 +1,4 @@
 import * as React from "react";
-
-import { IGame } from "../../models/IGame";
 import {
   TableContainer,
   Paper,
@@ -14,7 +12,10 @@ import {
   TablePagination,
 } from "@material-ui/core";
 import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
+import { confirmAlert } from "react-confirm-alert";
 
+import { IGame } from "../../models/IGame";
+import firebase from "firebase";
 export interface IGamesListProps {
   games: IGame[];
 }
@@ -28,7 +29,7 @@ const useStyles = makeStyles({
 
 export function GamesList(props: IGamesListProps) {
   const { games } = props;
-  const sortedGames = games.sort((a, b) => b.date - a.date);
+  const sortedGames = games?.sort((a, b) => b.date - a.date);
 
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
@@ -36,7 +37,7 @@ export function GamesList(props: IGamesListProps) {
 
   const emptyRows =
     rowsPerPage -
-    Math.min(rowsPerPage, sortedGames.length - page * rowsPerPage);
+    Math.min(rowsPerPage, sortedGames?.length - page * rowsPerPage);
 
   const handleChangePage = (_event: any, newPage: any) => {
     setPage(newPage);
@@ -45,6 +46,23 @@ export function GamesList(props: IGamesListProps) {
   const handleChangeRowsPerPage = (event: any) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const onDeleteGameClick = (game: IGame) => {
+    confirmAlert({
+      title: "Delete game",
+      message: `Are you sure you want to delete ${game.winner} vs. ${
+        game.looser
+      } on ${new Date(game.date).toLocaleDateString()}?`,
+      buttons: [
+        {
+          label: "Delete",
+          onClick: () =>
+            firebase.firestore().collection("games").doc(game.id).delete(),
+        },
+        { label: "Cancel", onClick: () => {} },
+      ],
+    });
   };
 
   return (
@@ -62,11 +80,12 @@ export function GamesList(props: IGamesListProps) {
             <TableCell>
               <b>Looser</b>
             </TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0
-            ? sortedGames.slice(
+            ? sortedGames?.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage
               )
@@ -78,6 +97,14 @@ export function GamesList(props: IGamesListProps) {
               </TableCell>
               <TableCell>{game.winner}</TableCell>
               <TableCell>{game.looser}</TableCell>
+              <TableCell>
+                <a
+                  onClick={() => onDeleteGameClick(game)}
+                  style={{ cursor: "pointer", padding: ".5em" }}
+                >
+                  X
+                </a>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -86,7 +113,7 @@ export function GamesList(props: IGamesListProps) {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
               colSpan={3}
-              count={sortedGames.length}
+              count={sortedGames?.length}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{
